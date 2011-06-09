@@ -1,0 +1,19 @@
+8
+
+dir
+217
+http://184.73.192.209/slx/SalesLogix/Source_Code/src/Provisioning/EnhancedTask/src/org/apache/commons
+http://184.73.192.209/slx
+
+
+
+2010-04-12T09:09:24.213782Z
+77
+haja
+
+
+svn:special svn:externals svn:needs-lock
+
+httpclient
+dir
+

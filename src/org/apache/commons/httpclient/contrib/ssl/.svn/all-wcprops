@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/slx/!svn/ver/77/SalesLogix/Source_Code/src/Provisioning/EnhancedTask/src/org/apache/commons/httpclient/contrib/ssl
+END
+EasyX509TrustManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/slx/!svn/ver/77/SalesLogix/Source_Code/src/Provisioning/EnhancedTask/src/org/apache/commons/httpclient/contrib/ssl/EasyX509TrustManager.java
+END
+EasySSLProtocolSocketFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/slx/!svn/ver/77/SalesLogix/Source_Code/src/Provisioning/EnhancedTask/src/org/apache/commons/httpclient/contrib/ssl/EasySSLProtocolSocketFactory.java
+END

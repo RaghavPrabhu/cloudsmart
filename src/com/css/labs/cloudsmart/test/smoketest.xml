@@ -1,0 +1,63 @@
+<project name="SmokeTest" basedir="." default="main">
+
+	<property file="build.default.properties" />
+	<property file="build.user.properties" />	
+	
+	<path id="classpath">
+	        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    	<copy todir="${classes.dir}">
+            <fileset dir="${src.dir}" excludes="**/*.java"/>
+        </copy>
+    </target>
+
+	<target name="run" depends="compile">
+		<taskdef name="servicesTest" classname="${smoketest.services}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="scheduledTaskTest" classname="${smoketest.scheduledtask}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="instanceTest" classname="${smoketest.instance}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="sqlUsersTest" classname="${smoketest.sqlusers}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="sqlJobTest" classname="${smoketest.sqljob}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="iisWebSiteTest" classname="${smoketest.iiswebsite}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="iisAppPoolTest" classname="${smoketest.iisapppool}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="iisDefaultURLTest" classname="${smoketest.iisdefaulturl}" classpath="${classes.dir}" classpathref="classpath"/>
+		<taskdef name="speedSearchTest" classname="${smoketest.speedsearch}" classpath="${classes.dir}" classpathref="classpath"/>
+	</target>
+	
+	  <target name="main" depends="clean,run">
+	  	<!-- Services Test for App DB Instance -->
+		<servicesTest serviceName="MSSQLSERVER"/>
+		<servicesTest serviceName="SQLSERVERAGENT"/>
+		<servicesTest serviceName="SQLBrowser"/>
+		<servicesTest serviceName="SalesLogix Server Service"/>
+		<servicesTest serviceName="SalesLogix System"/>
+		<servicesTest serviceName="SalesLogix DBEventing Service"/>
+		<servicesTest serviceName="SlxSearch"/>
+		<scheduledTaskTest serverType="AppDB"/>
+		<sqlUsersTest userName="sa" password="SLXMa$t3r" fileLocation="scripts/dbbackupuser.sql"/>
+		<sqlJobTest userName="sa" password="SLXMa$t3r" jobFileListLocation="scripts/sqljobs.sql" createJobFileLocation="scripts/dbbackupjob.sql"/>
+		<instanceTest accessKey="${awsAccessKey}" secretKey="${awsSecretKey}" instanceId="${ec2.instance.instanceId}" serverType="AppDB"/>
+		<speedSearchTest fileLocation="C:\\Program Files\\SalesLogix\\SpeedSearch\\Bin\\SlxSearchService.ini"/>
+		
+		<!-- Services Test for Web Server Instance -->
+		<servicesTest serviceName="IISADMIN"/>
+		<servicesTest serviceName="RpcSs"/>
+		<servicesTest serviceName="SamSs"/>
+		<servicesTest serviceName="HTTPFilter"/>
+		<servicesTest serviceName="W3SVC"/>
+		<servicesTest serviceName="SalesLogix System"/>
+		<scheduledTaskTest serverType="WS"/>
+		<iisWebSiteTest webSiteListScriptFile="scripts/iiswebsitelist.vbs"/>
+		<iisAppPoolTest appPoolListScriptFile="scripts/iisapppoollist.vbs"/>
+		<iisDefaultURLTest fileLocation="C:\\Inetpub\\wwwroot\\default.asp" replaceString="" searchString=""/>
+		<instanceTest accessKey="${awsAccessKey}" secretKey="${awsSecretKey}" instanceId="${ec2.instance.instanceId}" serverType="WS"/>
+	  </target>
+	
+</project>
