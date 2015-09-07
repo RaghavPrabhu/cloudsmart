@@ -1,0 +1,1 @@
+CloudSmart is the ANT script for making the application deployment over the cloud (currently CloudSmart works on Amazon Cloud) on complete automation without human intervention. It supports both Windows and Linux platforms.
